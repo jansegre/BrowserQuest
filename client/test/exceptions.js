@@ -1,18 +1,13 @@
-load_boilerplate = require('../../shared/js/boilerplate.js');
-eval(load_boilerplate());
+var should = require('should');
+var Exceptions = require('../exceptions');
 
 describe('LootException', function() {
-    var Exceptions;
     var self = this;
 
     beforeEach(function(done) {
-
-        requirejs(['exceptions'], function(_Module) {
-            Exceptions = _Module;
-            self.message = "Loot Exception";
-            self.loot_exception = new Exceptions.LootException(self.message);
-            done();
-        });
+        self.message = "Loot Exception";
+        self.loot_exception = new Exceptions.LootException(self.message);
+        done();
     });
 
     describe('#init', function() {

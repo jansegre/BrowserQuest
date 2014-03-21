@@ -1,21 +1,17 @@
-load_boilerplate = require('../../shared/js/boilerplate.js');
-eval(load_boilerplate());
+var should = require('should');
+var Area = require('../area');
+
 
 describe('Area', function() {
-    var Area;
     var self = this;
 
     beforeEach(function(done) {
-
-        requirejs(['area'], function(_Module) {
-            Area = _Module;
-            self.x = 0;
-            self.y = 0;
-            self.width = 10;
-            self.height = 10;
-            self.area = new Area(self.x, self.y, self.width, self.height);
-            done();
-        });
+        self.x = 0;
+        self.y = 0;
+        self.width = 10;
+        self.height = 10;
+        self.area = new Area(self.x, self.y, self.width, self.height);
+        done();
     });
 
     describe('.init', function() {

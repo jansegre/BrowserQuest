@@ -1,17 +1,13 @@
-load_boilerplate = require('../../shared/js/boilerplate.js');
-eval(load_boilerplate());
+var should = require('should');
+var sinon = require('sinon');
+var Item = require('../item');
 
 describe('Item', function() {
-    var Item;
     var self = this;
 
     beforeEach(function(done) {
-        requirejs(['item'], function(_Module) {
-            Item = _Module;
-            self.item = new Item(1, 'testKind', 'type');
-            done();
-        });
-
+        self.item = new Item(1, 'testKind', 'type');
+        done();
     });
 
     before(function() {

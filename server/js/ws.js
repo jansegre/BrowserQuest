@@ -126,7 +126,7 @@ WS.MultiVersionWebsocketServer = Server.extend({
             var app = connect();
 
             // Serve everything in the client subdir statically
-            app.use(connect.static('client'));
+            app.use(connect.static('static'));
 
             // Display errors (such as 404's) in the server log
             app.use(connect.logger('dev'));
