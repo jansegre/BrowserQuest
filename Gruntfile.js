@@ -30,13 +30,24 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         src: 'Gruntfile.js'
-      },
-      client: {
-        src: ['client/**.js'],
-        options: {
-          force: true
-        }
-      },
+      }
+    },
+    coffeelint: {
+      client: ['client/**.coffee'],
+      options: {
+        arrow_spacing: {
+          level: 'error'
+        },
+        no_trailing_whitespace: {
+          level: 'error'
+        },
+        max_line_length: {
+          level: 'ignore'
+        },
+        space_operators: {
+          level: 'warn'
+        },
+      }
     },
     watch: {
       gruntfile: {
@@ -50,28 +61,29 @@ module.exports = function(grunt) {
     },
     browserify: {
       client: {
-        src: 'client/main.js',
+        src: 'client/main.coffee',
         dest: 'static/js/bundle.js',
-        options: {
-          debug: true,
-          ignoreGlobals: true
-        }
       },
+      //TODO: should replace with workerify?
       mapworker: {
-        src: 'client/mapworker.js',
+        src: 'client/mapworker.coffee',
         dest: 'static/js/mapworker.js',
-        options: {
-          debug: true,
-          ignoreGlobals: true
-        }
+      },
+      options: {
+        //transform: ['coffeeify', 'workerify'],
+        transform: ['coffeeify'],
+        extension: '.coffee',
+        debug: true,
+        ignoreGlobals: true
       }
     },
     mochaTest: {
       client: {
         options: {
-          reporter: 'spec'
+          reporter: 'spec',
+          require: 'coffee-script/register'
         },
-        src: ['client/test/**.js']
+        src: ['client/test/**.coffee']
       }
     }
   });
@@ -81,10 +93,13 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-mocha-test');
+  grunt.loadNpmTasks('grunt-coffeelint');
 
   // Default task.
   grunt.registerTask('test', ['mochaTest']);
-  grunt.registerTask('default', ['jshint', 'test', 'browserify']);
+  grunt.registerTask('lint', ['jshint', 'coffeelint']);
+  grunt.registerTask('compile', ['browserify']);
+  grunt.registerTask('default', ['lint', 'test', 'compile']);
 
 };
 // vim: et sw=2 ts=2 sts=2
