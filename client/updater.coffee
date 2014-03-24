@@ -50,6 +50,7 @@ class Updater
     m = null
     z = @game.currentZoning
     @game.forEachEntity (entity) ->
+      #FIXME: sometimes "Uncaught TypeError: Cannot read property 'movement' of undefined"
       m = entity.movement
       m.step self.game.currentTime  if m.inProgress  if m
 
