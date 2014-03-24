@@ -12,6 +12,8 @@ getX = (id, w) ->
   return 0 if id is 0
   (if (id % w is 0) then w - 1 else (id % w) - 1)
 
+#TODO: parametrize colors
+
 class Renderer
   constructor: (@game, canvas, background, foreground) ->
     @context = (if (canvas and canvas.getContext) then canvas.getContext("2d") else null)
@@ -38,11 +40,9 @@ class Renderer
     @tablet = Detect.isTablet(window.innerWidth)
     @fixFlickeringTimer = new Timer(100)
 
-  getWidth: ->
-    @canvas.width
+  getWidth: -> @canvas.width
 
-  getHeight: ->
-    @canvas.height
+  getHeight: -> @canvas.height
 
   setTileset: (@tileset) ->
 
@@ -89,40 +89,30 @@ class Renderer
     @FPS = (if @mobile then 50 else 50)
 
   initFont: ->
-    fontsize = undefined
-    switch @scale
-      when 1
-        fontsize = 10
-      when 2
-        fontsize = (if Detect.isWindows() then 10 else 13)
-      when 3
-        fontsize = 20
-    @setFontSize fontsize
+    @setFontSize switch @scale
+      when 1 then 10
+      when 2 then (if Detect.isWindows() then 10 else 13)
+      when 3 then 20
 
   setFontSize: (size) ->
-    font = size + "px GraphicPixel"
+    font = "#{size}px GraphicPixel"
     @context.font = font
     @background.font = font
 
   drawText: (text, x, y, centered, color, strokeColor) ->
-    ctx = @context
-    strokeSize = undefined
-    switch @scale
-      when 1
-        strokeSize = 3
-      when 2
-        strokeSize = 3
-      when 3
-        strokeSize = 5
+    strokeSize = switch @scale
+      when 1 then 3
+      when 2 then 3
+      when 3 then 5
     if text and x and y
-      ctx.save()
-      ctx.textAlign = "center"  if centered
-      ctx.strokeStyle = strokeColor or "#373737"
-      ctx.lineWidth = strokeSize
-      ctx.strokeText text, x, y
-      ctx.fillStyle = color or "white"
-      ctx.fillText text, x, y
-      ctx.restore()
+      @context.save()
+      @context.textAlign = "center"  if centered
+      @context.strokeStyle = strokeColor or "#373737"
+      @context.lineWidth = strokeSize
+      @context.strokeText text, x, y
+      @context.fillStyle = color or "white"
+      @context.fillText text, x, y
+      @context.restore()
 
   drawCellRect: (x, y, color) ->
     @context.save()
@@ -153,24 +143,25 @@ class Renderer
 
   drawTargetCell: ->
     mouse = @game.getMouseGridPosition()
-    @drawCellHighlight mouse.x, mouse.y, @game.targetColor  if @game.targetCellVisible and not (mouse.x is @game.selectedX and mouse.y is @game.selectedY)
+    if @game.targetCellVisible and not (mouse.x is @game.selectedX and mouse.y is @game.selectedY)
+      @drawCellHighlight mouse.x, mouse.y, @game.targetColor
 
   drawAttackTargetCell: ->
     mouse = @game.getMouseGridPosition()
     entity = @game.getEntityAt(mouse.x, mouse.y)
     s = @scale
-    @drawCellRect entity.x * s, entity.y * s, "rgba(255, 0, 0, 0.5)"  if entity
+    @drawCellRect entity.x * s, entity.y * s, "rgba(255, 0, 0, 0.5)" if entity?
 
   drawOccupiedCells: ->
     positions = @game.entityGrid
-    if positions
+    if positions?
       for i in [0..positions.length]
         for j in [0..positions[i].length]
-          @drawCellHighlight i, j, "rgba(50, 50, 255, 0.5)"  unless _.isNull(positions[i][j])
+          @drawCellHighlight i, j, "rgba(50, 50, 255, 0.5)" unless _.isNull(positions[i][j])
 
   drawPathingCells: ->
     grid = @game.pathingGrid
-    if grid and @game.debugPathing
+    if grid? and @game.debugPathing
       for y in [0..grid.length]
         for x in [0..grid[y].length]
           @drawCellHighlight x, y, "rgba(50, 50, 255, 0.5)"  if grid[y][x] is 1 and @game.camera.isVisiblePosition(x, y)
@@ -185,11 +176,8 @@ class Renderer
         if @game.drawTarget
           x = @game.selectedX
           y = @game.selectedY
-          @drawCellHighlight @game.selectedX, @game.selectedY, "rgb(51, 255, 0)"
-          @lastTargetPos =
-            x: x
-            y: y
-
+          @drawCellHighlight x, y, "rgb(51, 255, 0)"
+          @lastTargetPos = x: x, y: y
           @game.drawTarget = false
       else
         if sprite and anim
@@ -269,7 +257,7 @@ class Renderer
       if entity.isFading
         @context.save()
         @context.globalAlpha = entity.fadingAlpha
-      @drawEntityName entity  if not @mobile and not @tablet
+      @drawEntityName entity unless @mobile or @tablet
       @context.save()
       if entity.flipSpriteX
         @context.translate dx + @tilesize * s, dy
@@ -280,7 +268,8 @@ class Renderer
       else
         @context.translate dx, dy
       if entity.isVisible()
-        @context.drawImage shadow.image, 0, 0, shadow.width * os, shadow.height * os, 0, entity.shadowOffsetY * ds, shadow.width * os * ds, shadow.height * os * ds  if entity.hasShadow()
+        if entity.hasShadow()
+          @context.drawImage shadow.image, 0, 0, shadow.width * os, shadow.height * os, 0, entity.shadowOffsetY * ds, shadow.width * os * ds, shadow.height * os * ds
         @context.drawImage sprite.image, x, y, w, h, ox, oy, dw, dh
         if entity instanceof Item and entity.kind isnt Types.Entities.CAKE
           sparks = @game.sprites["sparks"]
@@ -302,7 +291,7 @@ class Renderer
           wh = weapon.height * os
           @context.drawImage weapon.image, wx, wy, ww, wh, weapon.offsetX * s, weapon.offsetY * s, ww * ds, wh * ds
       @context.restore()
-      @context.restore()  if entity.isFading
+      @context.restore() if entity.isFading
 
   drawEntities: (dirtyOnly) ->
     @game.forEachVisibleEntityByDepth (entity) =>

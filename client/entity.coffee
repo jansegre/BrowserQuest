@@ -21,52 +21,49 @@ class Entity
     @isFading = false
     @setDirty()
 
-  setName: (name) ->
-    @name = name
+  setName: (@name) ->
 
-  setPosition: (x, y) ->
-    @x = x
-    @y = y
+  setPosition: (@x, @y) ->
 
-  setGridPosition: (x, y) ->
-    @gridX = x
-    @gridY = y
-    @setPosition x * 16, y * 16
+  setGridPosition: (@gridX, @gridY) ->
+    @setPosition @gridX * 16, @gridY * 16
 
   setSprite: (sprite) ->
     unless sprite?
-      log.error @id + " : sprite is null", true
+      log.error "#{@id}: sprite is #{sprite}", true
       throw new Error "Sprite error"
-    return  if @sprite and @sprite.name is sprite.name
+    return if @sprite and @sprite.name is sprite.name
+
     @sprite = sprite
     @normalSprite = @sprite
-    @hurtSprite = sprite.getHurtSprite()  if Types.isMob(@kind) or Types.isPlayer(@kind)
+
+    @hurtSprite = sprite.getHurtSprite() if Types.isMob(@kind) or Types.isPlayer(@kind)
+
     @animations = sprite.createAnimations()
+
     @isLoaded = true
-    @ready_func()  if @ready_func
+    @ready_func() if @ready_func
 
-  getSprite: ->
-    @sprite
+  getSprite: -> @sprite
 
-  getSpriteName: ->
-    Types.getKindAsString @kind
+  getSpriteName: -> Types.getKindAsString @kind
 
   getAnimationByName: (name) ->
     animation = null
     if name of @animations
       animation = @animations[name]
     else
-      log.error "No animation called " + name
+      log.error "No animation called #{name}"
     animation
 
   setAnimation: (name, speed, count, onEndCount) ->
     if @isLoaded
-      return  if @currentAnimation and @currentAnimation.name is name
+      return if @currentAnimation and @currentAnimation.name is name
       s = @sprite
       a = @getAnimationByName(name)
-      if a
+      if a?
         @currentAnimation = a
-        @currentAnimation.reset()  if name.substr(0, 3) is "atk"
+        @currentAnimation.reset() if name.substr(0, 3) is "atk"
         @currentAnimation.setSpeed speed
         @currentAnimation.setCount (if count then count else 0), onEndCount or => @idle()
     else
@@ -75,49 +72,36 @@ class Entity
   hasShadow: ->
     false
 
-  ready: (f) ->
-    @ready_func = f
+  ready: (@ready_func) ->
 
-  clean: ->
-    @stopBlinking()
+  clean: -> @stopBlinking()
 
-  log_info: (message) ->
-    log.info "[" + @id + "] " + message
+  log_info: (message) -> log.info "[#{@id}] #{message}"
 
-  log_error: (message) ->
-    log.error "[" + @id + "] " + message
+  log_error: (message) -> log.error "[#{@id}] #{message}"
 
   setHighlight: (value) ->
-    if value is true
+    if value
       @sprite = @sprite.silhouetteSprite
       @isHighlighted = true
     else
       @sprite = @normalSprite
       @isHighlighted = false
 
-  setVisible: (value) ->
-    @visible = value
+  setVisible: (@visible) ->
 
-  isVisible: ->
-    @visible
+  isVisible: -> @visible
 
-  toggleVisibility: ->
-    if @visible
-      @setVisible false
-    else
-      @setVisible true
+  toggleVisibility: -> @setVisible not @visible
 
   getDistanceToEntity: (entity) ->
     distX = Math.abs(entity.gridX - @gridX)
     distY = Math.abs(entity.gridY - @gridY)
-    (if (distX > distY) then distX else distY)
+    Math.max(distX, distY)
 
   isCloseTo: (entity) ->
-    dx = undefined
-    dy = undefined
-    d = undefined
     close = false
-    if entity
+    if entity?
       dx = Math.abs(entity.gridX - @gridX)
       dy = Math.abs(entity.gridY - @gridY)
       close = true  if dx < 30 and dy < 14
@@ -128,14 +112,11 @@ class Entity
   @returns {Boolean} Whether these two entities are adjacent.
   ###
   isAdjacent: (entity) ->
-    adjacent = false
-    adjacent = (if @getDistanceToEntity(entity) > 1 then false else true)  if entity
-    adjacent
+    return false unless entity?
+    @getDistanceToEntity(entity) <= 1
 
   isAdjacentNonDiagonal: (entity) ->
-    result = false
-    result = true  if @isAdjacent(entity) and not (@gridX isnt entity.gridX and @gridY isnt entity.gridY)
-    result
+    @isAdjacent(entity) and (@gridX is entity.gridX or @gridY is entity.gridY)
 
   isDiagonallyAdjacent: (entity) ->
     @isAdjacent(entity) and not @isAdjacentNonDiagonal(entity)
@@ -154,14 +135,13 @@ class Entity
     @blinking = setInterval (=> @toggleVisibility()), speed
 
   stopBlinking: ->
-    clearInterval @blinking  if @blinking
+    clearInterval @blinking if @blinking
     @setVisible true
 
   setDirty: ->
     @isDirty = true
-    @dirty_callback this  if @dirty_callback
+    @dirty_callback this if @dirty_callback
 
-  onDirty: (dirty_callback) ->
-    @dirty_callback = dirty_callback
+  onDirty: (@dirty_callback) ->
 
 module.exports = Entity

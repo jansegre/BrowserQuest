@@ -105,7 +105,7 @@ class AudioManager
 
   getSound: (name) ->
     return null  unless @sounds[name]
-    sound = _.detect @sounds[name], (sound) -> sound.ended or sound.paused 
+    sound = _.detect @sounds[name], (sound) -> sound.ended or sound.paused
     if sound and sound.ended
       sound.currentTime = 0
     else

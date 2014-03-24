@@ -7,18 +7,16 @@ class Item extends Entity
     @itemKind = Types.getKindAsString(kind)
     @wasDropped = false
 
-  hasShadow: ->
-    true
+  hasShadow: -> true
 
   onLoot: (player) ->
     if @type is "weapon"
       player.switchWeapon @itemKind
-    else player.armorloot_callback @itemKind  if @type is "armor"
+    else if @type is "armor"
+      player.armorloot_callback @itemKind
 
-  getSpriteName: ->
-    "item-#{@itemKind}"
+  getSpriteName: -> "item-#{@itemKind}"
 
-  getLootMessage: ->
-    @lootMessage
+  getLootMessage: -> @lootMessage
 
 module.exports = Item
