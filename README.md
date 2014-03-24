@@ -1,8 +1,9 @@
 BrowserQuest
 ============
 
+[![Build Status](https://api.travis-ci.org/jansegre/BrowserQuest.svg)](https://travis-ci.org/jansegre/BrowserQuest)
 <!--
-[![Build Status](https://travis-ci.org/browserquest/BrowserQuest.png)](https://travis-ci.org/browserquest/BrowserQuest) [![Dependency Status](https://gemnasium.com/browserquest/BrowserQuest.png)](https://gemnasium.com/browserquest/BrowserQuest)
+[![Dependency Status](https://gemnasium.com/browserquest/BrowserQuest.png)](https://gemnasium.com/browserquest/BrowserQuest)
 -->
 
 [This](https://github.com/jansegre/BrowserQuest) is a fork of [Browser Quest](https://github.com/browserquest/BrowserQuest), a new name is pending...
