@@ -16,8 +16,8 @@ class Sprite
     @animationData = data.animations
     @width = data.width
     @height = data.height
-    @offsetX = data.offset_x or -16
-    @offsetY = data.offset_y or -16
+    @offsetX = if data.offset_x? then data.offset_x else -16
+    @offsetY = if data.offset_y? then data.offset_y else -16
     @load()
 
   load: ->
