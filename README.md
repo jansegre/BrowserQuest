@@ -32,7 +32,7 @@ How to get it going
 
 Getting the server up and running is pretty easy. You need to have the following installed:
 
-* Node.js ← Versions 0.8.x-0.10.x work.  **Do not use 0.6.x, it [does not work](https://github.com/senchalabs/connect/issues/858).**
+* Node.js ← Version 0.10.x work. Some dependencies do not support 0.8.x, and some don't build on 0.11.x yet.
 * Grunt ← needed to generate the app's bundle.js.
 * gcc-c++ ← optional.  Not needed on windows.
 * Memcached ← optional. This is needed to enable metrics.
