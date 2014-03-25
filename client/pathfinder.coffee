@@ -9,9 +9,9 @@ class Pathfinder
     @ignored = []
 
   initBlankGrid_: ->
-    for i in [0..@height]
+    for i in [0...@height]
       @blankGrid[i] = []
-      for j in [0..@width]
+      for j in [0...@width]
         @blankGrid[i][j] = 0
 
   findPath: (grid, entity, x, y, findIncomplete) ->
@@ -48,7 +48,7 @@ class Pathfinder
     incomplete = []
     perfect = AStar(@blankGrid, start, end)
 
-    for i in [perfect.length - 1..0]
+    for i in [perfect.length - 1...0]
       x = perfect[i][0]
       y = perfect[i][1]
       if @grid[y][x] is 0

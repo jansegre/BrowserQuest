@@ -9,9 +9,9 @@ global.onmessage = (event) ->
 generateCollisionGrid = ->
   mapData.grid = []
 
-  for i in [0..mapData.height]
+  for i in [0...mapData.height]
     mapData.grid[i] = []
-    for j in [0..mapData.width]
+    for j in [0...mapData.width]
       mapData.grid[i][j] = 0
 
   _.each mapData.collisions, (tileIndex) ->
@@ -26,9 +26,9 @@ generatePlateauGrid = ->
   tileIndex = 0
   mapData.plateauGrid = []
 
-  for i in [0..mapData.height]
+  for i in [0...mapData.height]
     mapData.plateauGrid[i] = []
-    for j in [0..mapData.width]
+    for j in [0...mapData.width]
       if _.include(mapData.plateau, tileIndex)
         mapData.plateauGrid[i][j] = 1
       else

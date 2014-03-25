@@ -147,9 +147,9 @@ class Map
   _generateCollisionGrid: ->
     @grid = []
 
-    for i in [0..@height]
+    for i in [0...@height]
       @grid[i] = []
-      for j in [0..@width]
+      for j in [0...@width]
         @grid[i][j] = 0
 
     _.each @collisions, (tileIndex) =>
@@ -166,9 +166,9 @@ class Map
     tileIndex = 0
     @plateauGrid = []
 
-    for i in [0..@height]
+    for i in [0...@height]
       @plateauGrid[i] = []
-      for j in [0..@width]
+      for j in [0...@width]
         if _.include(@plateau, tileIndex)
           @plateauGrid[i][j] = 1
         else

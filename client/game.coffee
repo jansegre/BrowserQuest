@@ -454,36 +454,36 @@ class Game
 
   initPathingGrid: ->
     @pathingGrid = []
-    for i in [0..@map.height]
+    for i in [0...@map.height]
       @pathingGrid[i] = []
-      for j in [0..@map.width]
+      for j in [0...@map.width]
         @pathingGrid[i][j] = @map.grid[i][j]
 
     log.info "Initialized the pathing grid with static colliding cells."
 
   initEntityGrid: ->
     @entityGrid = []
-    for i in [0..@map.height]
+    for i in [0...@map.height]
       @entityGrid[i] = []
-      for j in [0..@map.width]
+      for j in [0...@map.width]
         @entityGrid[i][j] = {}
 
     log.info "Initialized the entity grid."
 
   initRenderingGrid: ->
     @renderingGrid = []
-    for i in [0..@map.height]
+    for i in [0...@map.height]
       @renderingGrid[i] = []
-      for j in [0..@map.width]
+      for j in [0...@map.width]
         @renderingGrid[i][j] = {}
 
     log.info "Initialized the rendering grid."
 
   initItemGrid: ->
     @itemGrid = []
-    for i in [0..@map.height]
+    for i in [0...@map.height]
       @itemGrid[i] = []
-      for j in [0..@map.width]
+      for j in [0...@map.width]
         @itemGrid[i][j] = {}
 
     log.info "Initialized the item grid."
@@ -1945,8 +1945,8 @@ class Game
       attacker.follow target
 
   forEachEntityAround: (x, y, r, callback) ->
-    for i in [x - r...x + r]
-      for j in [y - r...y + r]
+    for i in [x - r..x + r]
+      for j in [y - r..y + r]
         unless @map.isOutOfBounds(i, j)
           _.each @renderingGrid[j][i], (entity) ->
             callback entity

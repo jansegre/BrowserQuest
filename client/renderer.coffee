@@ -155,15 +155,15 @@ class Renderer
   drawOccupiedCells: ->
     positions = @game.entityGrid
     if positions?
-      for i in [0..positions.length]
-        for j in [0..positions[i].length]
+      for i in [0...positions.length]
+        for j in [0...positions[i].length]
           @drawCellHighlight i, j, "rgba(50, 50, 255, 0.5)" unless _.isNull(positions[i][j])
 
   drawPathingCells: ->
     grid = @game.pathingGrid
     if grid? and @game.debugPathing
-      for y in [0..grid.length]
-        for x in [0..grid[y].length]
+      for y in [0...grid.length]
+        for x in [0...grid[y].length]
           @drawCellHighlight x, y, "rgba(50, 50, 255, 0.5)"  if grid[y][x] is 1 and @game.camera.isVisiblePosition(x, y)
 
   drawSelectedCell: ->
