@@ -34,6 +34,7 @@ module.exports = function(grunt) {
     },
     coffeelint: {
       client: ['client/**.coffee'],
+      server: ['server/**.coffee'],
       options: {
         arrow_spacing: {
           level: 'error'
