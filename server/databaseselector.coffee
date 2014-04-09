@@ -1,4 +1,7 @@
-#XXX: not browserifiable
+#XXX: not browserifiable, may not be a big deal
 path = require("path")
-module.exports = (config) ->
+
+databaseselector = (config) ->
   require path.resolve(__dirname, "db_providers", config.database)
+
+module.exports = databaseselector

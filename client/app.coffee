@@ -101,27 +101,10 @@ class App
   startGame: (action, username, userpw, email) ->
     self = this
     @firstTimePlaying = not self.storage.hasAlreadyPlayed()
+
     if username and not @game.started
-      optionsSet = false
-      config = @config
-
-      #>>includeStart("devHost", pragmas.devHost);
-      if config.local
-        log.debug "Starting game with local dev config."
-        @game.setServerOptions config.local.host, config.local.port, username, userpw, email
-      else
-        log.debug "Starting game with default dev config."
-        @game.setServerOptions config.dev.host, config.dev.port, username, userpw, email
-      optionsSet = true
-
-      #>>includeEnd("devHost");
-
-      #>>includeStart("prodHost", pragmas.prodHost);
-      unless optionsSet
-        log.debug "Starting game with build config."
-        @game.setServerOptions config.build.host, config.build.port, username, userpw, email
-
-      #>>includeEnd("prodHost");
+      log.debug "Starting game..."
+      @game.setServerOptions @config.host, @config.port, username, userpw, email
 
       # On mobile and tablet we load the map after the player has clicked
       # on the login/create button instead of loading it in a web worker.

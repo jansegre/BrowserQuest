@@ -1,13 +1,13 @@
-config =
-  dev:
-    host: "localhost"
-    port: 8000
-    dispatcher: false
+_ = require("underscore")
+fs = require("fs")
+yaml = require("js-yaml")
 
-  build: require("./config/config_build")
+config = yaml.safeLoad(fs.readFileSync("#{__dirname}/../config/client.yaml", "utf8"))
 
-# Exception triggered when config_local.json does not exist. Nothing to do here.
-try
-  config.local = require("./config/config_local")
+_.defaults(config,
+  host: "localhost"
+  port: 8000
+  dispatcher: false
+)
 
 module.exports = config

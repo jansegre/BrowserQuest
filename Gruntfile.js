@@ -72,7 +72,7 @@ module.exports = function(grunt) {
       },
       options: {
         //transform: ['coffeeify', 'workerify'],
-        transform: ['coffeeify'],
+        transform: ['coffeeify', 'brfs'],
         extension: '.coffee',
         debug: true,
         ignoreGlobals: true

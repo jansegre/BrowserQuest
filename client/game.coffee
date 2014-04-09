@@ -638,17 +638,8 @@ class Game
 
       @started = false
 
-    #>>excludeStart("prodHost", pragmas.prodHost);
-    config = @app.config.local or @app.config.dev
-    if config
-      @client.connect config.dispatcher # false if the client connects directly to a game server
-      connecting = true
+    @client.connect @app.config.dispatcher # false if the client connects directly to a game server
 
-    #>>excludeEnd("prodHost");
-    #>>includeStart("prodHost", pragmas.prodHost);
-    @client.connect false  unless connecting # dont use the dispatcher in production
-
-    #>>includeEnd("prodHost");
     @client.onDispatched (host, port) =>
       log.debug "Dispatched to game server " + host + ":" + port
       @client.host = host
@@ -847,7 +838,7 @@ class Game
         @storage.savePlayer @renderer.getPlayerImage(), @player.getArmorName(), @player.getWeaponName(), @player.getGuild()
         @equipment_callback()  if @equipment_callback
 
-      @player.onInvincible ->
+      @player.onInvincible =>
         @invincible_callback()
         @player.switchArmor @sprites["firefox"]
 
@@ -889,12 +880,13 @@ class Game
                     @registerEntityDualPosition entity
 
                     #FIXME: when disconnecting "Uncaught TypeError: Cannot read property 'target' of null"
-                    @makeAttackerFollow @player  if @player.target is entity
-                    entity.forEachAttacker (attacker) ->
-                      if attacker.isAdjacent(attacker.target)
-                        attacker.lookAtTarget()
-                      else
-                        attacker.follow entity
+                    try
+                      @makeAttackerFollow @player if @player.target is entity
+                      entity.forEachAttacker (attacker) ->
+                        if attacker.isAdjacent(attacker.target)
+                          attacker.lookAtTarget()
+                        else
+                          attacker.follow entity
 
                 entity.onStopPathing (x, y) =>
                   unless entity.isDying

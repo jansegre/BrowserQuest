@@ -172,14 +172,11 @@ class Player extends Character
           @switch_callback()  if @switch_callback
       , 90)
 
-  onArmorLoot: (callback) ->
-    @armorloot_callback = callback
+  onArmorLoot: (@armorloot_callback) ->
 
-  onSwitchItem: (callback) ->
-    @switch_callback = callback
+  onSwitchItem: (@switch_callback) ->
 
-  onInvincible: (callback) ->
-    @invincible_callback = callback
+  onInvincible: (@invincible_callback) ->
 
   startInvincibility: ->
     unless @invincible
@@ -188,7 +185,7 @@ class Player extends Character
       @invincible_callback()
     else
       # If the player already has invincibility, just reset its duration.
-      clearTimeout @invincibleTimeout  if @invincibleTimeout
+      clearTimeout @invincibleTimeout if @invincibleTimeout
     @invincibleTimeout = setTimeout(=>
       @stopInvincibility()
       @idle()
@@ -201,7 +198,7 @@ class Player extends Character
       @setSprite @currentArmorSprite
       @setSpriteName @currentArmorSprite.id
       @currentArmorSprite = null
-    clearTimeout @invincibleTimeout  if @invincibleTimeout
+    clearTimeout @invincibleTimeout if @invincibleTimeout
 
   flagPVP: (@pvpFlag) ->
 

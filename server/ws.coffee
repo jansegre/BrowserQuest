@@ -106,50 +106,51 @@ class WS.MultiVersionWebsocketServer extends Server
             if @statusCallback
               response.writeHead 200
               response.write @statusCallback()
-          when "/config/config_build.json", "/config/config_local.json"
-            # Generate the config_build/local.json files on the
-            # fly, using the host address and port from the
-            # incoming http header
+          # XXX: temporarily disabling this, is it necessary?
+          #when "/config/config_build.json", "/config/config_local.json"
+          #  # Generate the config_build/local.json files on the
+          #  # fly, using the host address and port from the
+          #  # incoming http header
 
-            # Grab the incoming host:port request string
-            headerPieces = request.connection.parser.incoming.headers.host.split(":", 2)
+          #  # Grab the incoming host:port request string
+          #  headerPieces = request.connection.parser.incoming.headers.host.split(":", 2)
 
-            # Determine new host string to give clients
-            newHost = undefined
-            if (typeof headerPieces[0] is "string") and (headerPieces[0].length > 0)
-              # Seems like a valid string, lets use it
-              newHost = headerPieces[0]
-            else
-              # The host value doesn't seem usable, so
-              # fallback to the local interface IP address
-              newHost = request.connection.address().address
+          #  # Determine new host string to give clients
+          #  newHost = undefined
+          #  if (typeof headerPieces[0] is "string") and (headerPieces[0].length > 0)
+          #    # Seems like a valid string, lets use it
+          #    newHost = headerPieces[0]
+          #  else
+          #    # The host value doesn't seem usable, so
+          #    # fallback to the local interface IP address
+          #    newHost = request.connection.address().address
 
-            # Default port is 80
-            newPort = 80
-            if 2 is headerPieces.length
-              # We've been given a 2nd value, maybe a port #
-              if (typeof headerPieces[1] is "string") and (headerPieces[1].length > 0)
-                # If a usable port value was given, use that instead
-                tmpPort = parseInt(headerPieces[1], 10)
-                newPort = tmpPort  if not isNaN(tmpPort) and (tmpPort > 0) and (tmpPort < 65536)
+          #  # Default port is 80
+          #  newPort = 80
+          #  if 2 is headerPieces.length
+          #    # We've been given a 2nd value, maybe a port #
+          #    if (typeof headerPieces[1] is "string") and (headerPieces[1].length > 0)
+          #      # If a usable port value was given, use that instead
+          #      tmpPort = parseInt(headerPieces[1], 10)
+          #      newPort = tmpPort  if not isNaN(tmpPort) and (tmpPort > 0) and (tmpPort < 65536)
 
-            # Assemble the config data structure
-            newConfig =
-              host: newHost
-              port: newPort
-              dispatcher: false
+          #  # Assemble the config data structure
+          #  newConfig =
+          #    host: newHost
+          #    port: newPort
+          #    dispatcher: false
 
-            # Make it JSON
-            newConfigString = JSON.stringify(newConfig)
+          #  # Make it JSON
+          #  newConfigString = JSON.stringify(newConfig)
 
-            # Create appropriate http headers
-            responseHeaders =
-              "Content-Type": "application/json"
-              "Content-Length": newConfigString.length
+          #  # Create appropriate http headers
+          #  responseHeaders =
+          #    "Content-Type": "application/json"
+          #    "Content-Length": newConfigString.length
 
-            # Send it all back to the client
-            response.writeHead 200, responseHeaders
-            response.end newConfigString
+          #  # Send it all back to the client
+          #  response.writeHead 200, responseHeaders
+          #  response.end newConfigString
           when "/shared/js/file.js"
             # Sends the real shared/js/file.js to the client
             sendFile "js/file.js", response, log
