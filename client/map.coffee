@@ -2,7 +2,7 @@ $ = require("jquery")
 _ = require("underscore")
 Area = require("./area")
 Util = require("./util")
-Types = require("./types")
+Types = require("../common/types")
 log = require("./log")
 
 class Map

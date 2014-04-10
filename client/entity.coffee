@@ -1,4 +1,4 @@
-Types = require("./types")
+Types = require("../common/types")
 log = require("./log")
 
 class Entity

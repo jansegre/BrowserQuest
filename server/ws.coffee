@@ -151,22 +151,22 @@ class WS.MultiVersionWebsocketServer extends Server
           #  # Send it all back to the client
           #  response.writeHead 200, responseHeaders
           #  response.end newConfigString
-          when "/shared/js/file.js"
-            # Sends the real shared/js/file.js to the client
-            sendFile "js/file.js", response, log
-          when "/shared/js/gametypes.js"
-            # Sends the real shared/js/gametypes.js to the client
-            sendFile "js/gametypes.js", response, log
+          #when "/common/file.js"
+          #  # Sends the real common/file.js to the client
+          #  sendFile "js/file.js", response, log
+          #when "/common/types.js"
+          #  # Sends the real common/types.js to the client
+          #  sendFile "js/types.js", response, log
           else
             response.writeHead 404
         response.end()
-        return
 
       @_httpServer = http.createServer(app).listen port, @ip or undefined, serverEverythingListening = ->
         log.info "Server (everything) is listening on port " + port
+
     else
       # Only run the server side code
-      @_httpServer = http.createServer(statusListener = (request, response) =>
+      @_httpServer = http.createServer (request, response) =>
         path = url.parse(request.url).pathname
         if (path is "/status") and @statusCallback
           response.writeHead 200
@@ -174,8 +174,7 @@ class WS.MultiVersionWebsocketServer extends Server
         else
           response.writeHead 404
         response.end()
-        return
-      )
+
       @_httpServer.listen port, @ip, serverOnlyListening = ->
         log.info "Server (only) is listening on port " + port
 
@@ -204,7 +203,6 @@ class WS.MultiVersionWebsocketServer extends Server
           @addConnection c
         catch e
           console.log "WebSocket Request unsupported by WebSocket-Node: " + e.toString()
-          return
       else
         # WebSocket hixie-75/-76/hybi-00 connection (node-websocket-server)
         if req.method is "GET" and (req.headers.upgrade and req.headers.connection) and req.headers.upgrade.toLowerCase() is "websocket" and req.headers.connection.toLowerCase() is "upgrade"
@@ -271,7 +269,7 @@ class WS.MiksagoWebSocketConnection extends Connection
           @listenCallback JSON.parse(message)
 
     @_connection.on "close", (connection) =>
-      @closeCallback()  if @closeCallback
+      @closeCallback() if @closeCallback
       delete @_server.removeConnection(@id)
 
   send: (message) ->
@@ -289,7 +287,7 @@ class WS.MiksagoWebSocketConnection extends Connection
 sendFile = (file, response, log) ->
   try
     fs = require("fs")
-    realFile = fs.readFileSync(__dirname + "/../shared/" + file)
+    realFile = fs.readFileSync(__dirname + "/../common/" + file)
     responseHeaders =
       "Content-Type": "text/javascript"
       "Content-Length": realFile.length

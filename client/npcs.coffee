@@ -1,5 +1,5 @@
 Npc = require("./npc")
-Types = require("./types")
+Types = require("../common/types")
 
 NPCs = {}
 

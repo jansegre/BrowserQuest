@@ -61,7 +61,7 @@ module.exports = (grunt) ->
           #reporter: "spec"
           require: "coffee-script/register"
 
-        src: ["client/test/**.coffee"]
+        src: ["test/**/*.coffee"]
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks "grunt-contrib-watch"

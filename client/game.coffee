@@ -24,7 +24,7 @@ Chest = require("./chest")
 Mobs = require("./mobs")
 Exceptions = require("./exceptions")
 Guild = require("./guild")
-Types = require("./types")
+Types = require("../common/types")
 Util = require("./util")
 
 class Game

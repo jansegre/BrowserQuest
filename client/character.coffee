@@ -2,7 +2,7 @@ _ = require("underscore")
 Entity = require("./entity")
 Transition = require("./transition")
 Timer = require("./timer")
-Types = require("./types")
+Types = require("../common/types")
 log = require("./log")
 
 class Character extends Entity

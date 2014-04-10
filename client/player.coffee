@@ -2,7 +2,7 @@ $ = require("jquery")
 log = require("./log")
 Character = require("./character")
 Exceptions = require("./exceptions")
-Types = require("./types")
+Types = require("../common/types")
 
 class Player extends Character
   MAX_LEVEL: 10

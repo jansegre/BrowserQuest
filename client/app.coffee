@@ -2,7 +2,7 @@ _ = require("underscore")
 $ = require("jquery")
 log = require("./log")
 Storage = require("./storage")
-Types = require("./types")
+Types = require("../common/types")
 Util = require("./util")
 
 class App

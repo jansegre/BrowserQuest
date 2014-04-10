@@ -1,5 +1,5 @@
 Entity = require("./entity")
-Types = require("./types")
+Types = require("../common/types")
 
 class Item extends Entity
   constructor: (id, kind, @type) ->

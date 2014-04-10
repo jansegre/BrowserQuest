@@ -1,6 +1,6 @@
 _ = require("underscore")
 Area = require("./area")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 Utils = require("./utils")
 
 class MobArea extends Area

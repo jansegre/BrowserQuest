@@ -1,7 +1,7 @@
 _ = require("underscore")
 fs = require("fs")
-file = require("../shared/js/file")
 path = require("path")
+file = require("../common/file")
 Utils = require("./utils")
 Checkpoint = require("./checkpoint")
 

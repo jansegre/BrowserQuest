@@ -1,5 +1,5 @@
 sanitizer = require("sanitizer")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 Utils = {}
 

@@ -1,6 +1,6 @@
 _ = require("underscore")
 Item = require("./item")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 Utils = require("./utils")
 
 class Chest extends Item

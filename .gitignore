@@ -11,3 +11,4 @@ browserquest.conf
 *.sublime-project
 *.sublime-workspace
 /static/js/
+dump.rdb

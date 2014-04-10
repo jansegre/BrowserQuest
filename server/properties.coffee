@@ -1,4 +1,4 @@
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 Properties =
   rat:

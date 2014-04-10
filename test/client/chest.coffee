@@ -1,6 +1,6 @@
 should = require("should")
 sinon = require("sinon")
-Chest = require("../chest")
+Chest = require("../../client/chest")
 
 describe "Chest", ->
   beforeEach (done) =>

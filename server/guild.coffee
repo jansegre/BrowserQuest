@@ -2,7 +2,7 @@ _ = require("underscore")
 Messages = require("./message")
 Utils = require("./utils")
 check = require("./format").check
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 class Guild
   constructor: (@id, @name, @server) ->

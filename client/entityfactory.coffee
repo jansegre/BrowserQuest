@@ -5,7 +5,7 @@ Items = require("./items")
 NPCs = require("./npcs")
 Warrior = require("./warrior")
 Chest = require("./chest")
-Types = require("./types")
+Types = require("../common/types")
 
 EntityFactory = {}
 EntityFactory.createEntity = (kind, id, name) ->

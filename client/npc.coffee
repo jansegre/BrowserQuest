@@ -1,5 +1,5 @@
 Character = require("./character")
-Types = require("./types")
+Types = require("../common/types")
 log = require("./log")
 
 NpcTalk =

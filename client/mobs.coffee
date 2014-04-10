@@ -1,6 +1,6 @@
 Mob = require("./mob")
 Timer = require("./timer")
-Types = require("./types")
+Types = require("../common/types")
 
 Mobs = {}
 

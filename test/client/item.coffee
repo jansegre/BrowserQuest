@@ -1,6 +1,7 @@
 should = require("should")
 sinon = require("sinon")
-Item = require("../item")
+Item = require("../../client/item")
+Types = require("../../common/types")
 
 describe "Item", ->
   beforeEach (done) =>

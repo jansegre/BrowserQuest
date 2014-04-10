@@ -1,5 +1,5 @@
 Item = require("./item")
-Types = require("./types")
+Types = require("../common/types")
 
 Items = {}
 

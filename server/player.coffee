@@ -7,7 +7,7 @@ Messages = require("./message")
 Utils = require("./utils")
 Properties = require("./properties")
 Formulas = require("./formulas")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 class Player extends Character
   constructor: (@connection, @server, @databaseHandler) ->

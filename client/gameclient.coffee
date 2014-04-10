@@ -4,7 +4,7 @@ BISON = require("bison")
 log = require("./log")
 Player = require("./player")
 EntityFactory = require("./entityfactory")
-Types = require("./types")
+Types = require("../common/types")
 
 class GameClient
   constructor: (@host, @port) ->

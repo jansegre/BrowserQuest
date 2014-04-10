@@ -1,5 +1,5 @@
 _ = require("underscore")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 #TODO: find out why this is encapsulated, otherwise normalize it
 (->

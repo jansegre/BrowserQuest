@@ -1,5 +1,5 @@
 Player = require("./player")
-Types = require("./types")
+Types = require("../common/types")
 
 class Warrior extends Player
   constructor: (id, name) ->

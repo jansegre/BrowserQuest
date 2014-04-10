@@ -1,5 +1,5 @@
 _ = require("underscore")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 class Message
 

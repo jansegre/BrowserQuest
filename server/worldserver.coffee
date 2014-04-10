@@ -14,7 +14,7 @@ Chest = require("./chest")
 Messages = require("./message")
 Properties = require("./properties")
 Utils = require("./utils")
-Types = require("../shared/js/gametypes")
+Types = require("../common/types")
 
 # ======= GAME SERVER ========
 class World

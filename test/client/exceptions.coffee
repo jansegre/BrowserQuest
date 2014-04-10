@@ -1,5 +1,5 @@
 should = require("should")
-{LootException} = require("../exceptions")
+{LootException} = require("../../client/exceptions")
 
 describe "Exception", ->
   beforeEach (done) =>

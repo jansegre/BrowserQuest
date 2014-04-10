@@ -1,5 +1,5 @@
 should = require("should")
-Area = require("../area")
+Area = require("../../client/area")
 
 describe "Area", ->
   beforeEach (done) =>

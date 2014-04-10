@@ -5,7 +5,7 @@ Detect = require("./detect")
 Item = require("./item")
 Player = require("./player")
 Timer = require("./timer")
-Types = require("./types")
+Types = require("../common/types")
 Character = require("./character")
 
 getX = (id, w) ->

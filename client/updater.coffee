@@ -1,6 +1,6 @@
 Character = require("./character")
 Timer = require("./timer")
-Types = require("./types")
+Types = require("../common/types")
 
 class Updater
   constructor: (@game) ->
