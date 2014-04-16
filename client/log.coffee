@@ -1,36 +1,26 @@
-printStackTrace = require("stacktrace-js")
-#TODO: make proper class
-#TODO: find out how to point to where the log was called, as in console.log
+#printStackTrace = require("stacktrace-js")
+{log_level} = require("./config")
 
-Logger = (level) ->
-  @level = level
-  return
+#TODO: improve logging maybe?
+# See this: http://stackoverflow.com/questions/9559725/extending-console-log-without-affecting-log-line
+log = {}
 
-Logger::info = ->
+switch log_level
+  when "debug"
+    log.info = console.info.bind(console, "INFO")
+    log.debug = console.log.bind(console, "DEBUG")
+  when "info"
+    log.info = console.info.bind(console, "INFO")
+    log.debug = -> null
+  when "error"
+    log.info = -> null
+    log.debug = -> null
 
-Logger::debug = ->
+log.error = (message, show_tacktrace=false) ->
+  console.error message
+  if show_stacktrace
+    trace = printStackTrace()
+    console.error trace.join("\n\n")
+    console.error "-----------------------------"
 
-Logger::error = ->
-
-
-#>>excludeStart("prodHost", pragmas.prodHost);
-Logger::info = (message) ->
-  console.info message  if console  if @level is "debug" or @level is "info"
-  return
-
-Logger::debug = (message) ->
-  console.log message  if console  if @level is "debug"
-  return
-
-Logger::error = (message, stacktrace) ->
-  if console
-    console.error message
-    if stacktrace
-      trace = printStackTrace()
-      console.error trace.join("\n\n")
-      console.error "-----------------------------"
-  return
-#>>excludeEnd("prodHost");
-
-log = new Logger("debug")
 module.exports = log

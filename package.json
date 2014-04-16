@@ -26,7 +26,6 @@
     "sinon": ">=1",
     "coffee-script": "~1.7.1",
     "yaml": "~0.2.3",
-    "config": "~0.4.35",
     "js-yaml": "~3.0.2"
   },
   "devDependencies": {

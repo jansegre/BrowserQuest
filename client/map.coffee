@@ -5,6 +5,10 @@ Util = require("./util")
 Types = require("../common/types")
 log = require("./log")
 
+getX = (num, w) ->
+  return 0 if num is 0
+  (if (num % w is 0) then w - 1 else (num % w) - 1)
+
 class Map
   constructor: (@loadMultiTilesheets, @game) ->
     @data = []
@@ -123,9 +127,6 @@ class Map
   tileIndexToGridPosition: (tileNum) ->
     x = 0
     y = 0
-    getX = (num, w) ->
-      return 0  if num is 0
-      (if (num % w is 0) then w - 1 else (num % w) - 1)
 
     tileNum -= 1
     x = getX(tileNum + 1, @width)

@@ -8,6 +8,6 @@ class Chest extends Entity
 
   open: -> @open_callback() if @open_callback
 
-  onOpen: (callback) -> @open_callback = callback
+  onOpen: (@open_callback) ->
 
 module.exports = Chest

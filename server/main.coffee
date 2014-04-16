@@ -86,27 +86,4 @@ getWorldDistribution = (worlds) ->
     distribution.push world.playerCount
   distribution
 
-#getConfigFile = (path, callback) ->
-#  fs.readFile path, "utf8", (err, json_string) ->
-#    if err
-#      console.info "This server can be customized by creating a configuration file named: " + err.path
-#      callback null
-#    else
-#      callback JSON.parse(json_string)
-#
-#defaultConfigPath = "./server/config.json"
-#customConfigPath = "./server/config_local.json"
-#process.argv.forEach (val, index, array) ->
-#  customConfigPath = val if index is 2
-#
-#getConfigFile defaultConfigPath, (defaultConfig) ->
-#  getConfigFile customConfigPath, (localConfig) ->
-#    if localConfig
-#      main localConfig
-#    else if defaultConfig
-#      main defaultConfig
-#    else
-#      console.error "Server cannot start without any configuration file."
-#      process.exit 1
-
 main require("./config")

@@ -10,14 +10,14 @@ class Entity
   _getBaseState: ->
     [
       parseInt(@id, 10)
-      this.kind
-      this.x
-      this.y
+      @kind
+      @x
+      @y
     ]
 
   getState: -> @_getBaseState()
 
-  spawn: -> new Messages.Spawn(this)
+  spawn: -> new Messages.Spawn(@)
 
   despawn: -> new Messages.Despawn(@id)
 

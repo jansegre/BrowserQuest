@@ -12,6 +12,7 @@ Types = require("../common/types")
 class Player extends Character
   constructor: (@connection, @server, @databaseHandler) ->
     super @connection.id, "player", Types.Entities.WARRIOR, 0, 0, ""
+
     @hasEnteredGame = false
     @isDead = false
     @haters = {}
@@ -27,6 +28,7 @@ class Player extends Character
     @inventoryCount = []
     @achievement = []
     @chatBanEndTime = 0
+
     @connection.listen (message) =>
       action = parseInt(message[0])
       log.debug "Received: #{message}"

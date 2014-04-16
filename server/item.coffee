@@ -5,6 +5,7 @@ class Item extends Entity
     super id, "item", kind, x, y
     @isStatic = false
     @isFromChest = false
+    @respawnDelay = 30000
 
   handleDespawn: (params) ->
     @blinkTimeout = setTimeout(=>
@@ -13,9 +14,9 @@ class Item extends Entity
     , params.beforeBlinkDelay)
 
   destroy: ->
-    clearTimeout @blinkTimeout  if @blinkTimeout
-    clearTimeout @despawnTimeout  if @despawnTimeout
-    @scheduleRespawn 30000  if @isStatic
+    clearTimeout @blinkTimeout if @blinkTimeout
+    clearTimeout @despawnTimeout if @despawnTimeout
+    @scheduleRespawn @respawnDelay if @isStatic
 
   scheduleRespawn: (delay) ->
     setTimeout (=> @respawnCallback() if @respawnCallback), delay

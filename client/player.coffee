@@ -6,9 +6,11 @@ Types = require("../common/types")
 
 class Player extends Character
   MAX_LEVEL: 10
+
   constructor: (id, @name, @pw, kind, guild) ->
     super id, kind
-    @setGuild guild  if typeof guild isnt "undefined"
+
+    @setGuild guild if guild?
 
     # Renderer
     @nameOffsetY = -10
@@ -25,8 +27,7 @@ class Player extends Character
     # PVP Flag
     @pvpFlag = true
 
-  getGuild: ->
-    @guild
+  getGuild: -> @guild
 
   setGuild: (@guild) ->
     $("#guild-population").addClass "visible"
@@ -36,8 +37,7 @@ class Player extends Character
     delete @guild
     $("#guild-population").removeClass "visible"
 
-  hasGuild: ->
-    typeof @guild isnt "undefined"
+  hasGuild: -> @guild?
 
   addInvite: (inviteGuildId) ->
     @invite =

@@ -8,6 +8,7 @@ _.defaults(config,
   host: "localhost"
   port: 8000
   dispatcher: false
+  log_level: "error"
 )
 
 module.exports = config

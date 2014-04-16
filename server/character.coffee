@@ -5,10 +5,10 @@ Utils = require("./utils")
 class Character extends Entity
   constructor: (id, type, kind, x, y) ->
     super id, type, kind, x, y
+
     @orientation = Utils.randomOrientation()
     @attackers = {}
     @target = null
-    return
 
   getState: ->
     basestate = @_getBaseState()
