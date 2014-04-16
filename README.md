@@ -257,8 +257,13 @@ IRC Channel
 License
 -------
 
-Code is licensed under MPL 2.0. Content is licensed under CC-BY-SA 3.0.
-See the LICENSE file for details.
+Code is licensed under [MPL 2.0](http://www.mozilla.org/MPL/2.0/) also available locally on [LICENSE\_MPL.txt](LICENSE_MPL.txt). All code files covered by this license have the following header:
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+Content is licensed under [CC-BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/) also available locally on [LICENSE\_CC-BY-SA.txt](LICENSE\_CC-BY-SA.txt). All other files not covered by the above license are covered by this license unless otherwise stated on the file.
 
 Credits
 -------
