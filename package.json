@@ -40,7 +40,8 @@
     "grunt-coffeelint": "0.0.8",
     "watchify": "~0.6.3",
     "confify": "0.0.6",
-    "brfs": "~1.0.1"
+    "brfs": "~1.0.1",
+    "grunt-shell-spawn": "git+ssh://git@github.com:jansegre/grunt-shell-spawn.git"
   },
   "optionalDependencies": {
     "jsdom": "~0.10.3",

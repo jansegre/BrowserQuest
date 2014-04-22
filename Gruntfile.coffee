@@ -4,6 +4,12 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ###
 
+# return a function that prints colored prefixed lines
+printer = (prefix, color) ->
+  pre = (prefix + "> ")[color]
+  (data) ->
+    console.log(data.trimRight().split("\n").map((l) -> pre + l).join("\n"))
+
 module.exports = (grunt) ->
 
   # Project configuration.
@@ -14,8 +20,11 @@ module.exports = (grunt) ->
     #banner: "/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\n" + "<%= pkg.homepage ? \"* \" + pkg.homepage + \"\\n\" : \"\" %>" + "* Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author.name %>;" + " Licensed <%= _.pluck(pkg.licenses, \"type\").join(\", \") %> */\n"
 
     coffeelint:
+      gruntfile: "Gruntfile.coffee"
       client: ["client/**.coffee"]
       server: ["server/**.coffee"]
+      common: ["common/**.coffee"]
+      test: ["test/**.coffee"]
       options:
         arrow_spacing:
           level: "error"
@@ -29,17 +38,12 @@ module.exports = (grunt) ->
         space_operators:
           level: "warn"
 
-    watch:
-      gruntfile:
-        files: "<%= jshint.gruntfile.src %>"
-        tasks: ["jshint:gruntfile"]
-
+    mochaTest:
       client:
-        files: "<%= jshint.client.src %>"
-        tasks: [
-          "jshint:client"
-          "qunit"
-        ]
+        options:
+          #reporter: "spec"
+          require: "coffee-script/register"
+        src: ["test/**/*.coffee"]
 
     browserify:
       client:
@@ -52,35 +56,78 @@ module.exports = (grunt) ->
         dest: "static/js/mapworker.js"
 
       options:
-        #transform: ['coffeeify', 'workerify'],
         transform: [
           "coffeeify"
           "brfs"
+          #"workerify"
         ]
         extension: ".coffee"
         debug: true
         ignoreGlobals: true
 
-    mochaTest:
-      client:
+    shell:
+      redis:
+        command: "redis-server"
         options:
-          #reporter: "spec"
-          require: "coffee-script/register"
+          async: true
+          failOnError: true
+          stdout: printer("redis", "blue")
+          stderr: printer("redis", "red")
 
-        src: ["test/**/*.coffee"]
+      server:
+        command: "coffee server/main.coffee"
+        options:
+          async: true
+          stdout: printer("server", "cyan")
+          stderr: printer("server", "red")
+          stopIfStarted: true
+
+    watch:
+      config:
+        files: [
+          "Gruntfile.coffee"
+          "package.json"
+        ]
+        options:
+          reload: true
+
+      client:
+        files: [
+          "<%= coffeelint.client %>"
+          "<%= coffeelint.common %>"
+        ]
+        #TODO: livereload maybe?
+        tasks: ["browserify"]
+
+      server:
+        files: [
+          "<%= coffeelint.server %>"
+          "<%= coffeelint.common %>"
+        ]
+        tasks: ["shell:server"]
+        options:
+          spawn: false
 
   # These plugins provide necessary tasks.
   grunt.loadNpmTasks "grunt-contrib-watch"
   grunt.loadNpmTasks "grunt-browserify"
   grunt.loadNpmTasks "grunt-mocha-test"
   grunt.loadNpmTasks "grunt-coffeelint"
+  grunt.loadNpmTasks "grunt-shell-spawn"
 
   # Default task.
   grunt.registerTask "test", ["mochaTest"]
   grunt.registerTask "lint", ["coffeelint"]
   grunt.registerTask "compile", ["browserify"]
+  grunt.registerTask "run", [
+    #TODO: option to disable running redis in development
+    "shell:redis"
+    "shell:server"
+    "watch"
+  ]
   grunt.registerTask "default", [
     "lint"
     "test"
     "compile"
+    "run"
   ]
