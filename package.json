@@ -35,10 +35,8 @@
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.9.2",
     "grunt-contrib-watch": "~0.6.1",
-    "coffeeify": "~0.6.0",
     "grunt-coffeelint": "0.0.8",
-    "watchify": "~0.6.3",
-    "confify": "0.0.6",
+    "coffeeify": "~0.6.0",
     "brfs": "~1.0.1",
     "grunt-shell-spawn": "git+ssh://git@github.com:jansegre/grunt-shell-spawn.git"
   },
