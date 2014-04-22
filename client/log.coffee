@@ -22,7 +22,7 @@ switch log_level
     log.info = -> null
     log.debug = -> null
 
-log.error = (message, show_tacktrace=false) ->
+log.error = (message, show_stacktrace=false) ->
   console.error message
   if show_stacktrace
     trace = printStackTrace()
