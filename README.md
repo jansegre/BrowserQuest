@@ -1,7 +1,7 @@
 BrowserQuest
 ============
 
-[![Build Status](https://api.travis-ci.org/jansegre/BrowserQuest.svg)](https://travis-ci.org/jansegre/BrowserQuest)
+[![Build Status](https://api.travis-ci.org/jansegre/BrowserQuest.svg?branch=master)](https://travis-ci.org/jansegre/BrowserQuest)
 <!--
 [![Dependency Status](https://gemnasium.com/browserquest/BrowserQuest.png)](https://gemnasium.com/browserquest/BrowserQuest)
 -->
