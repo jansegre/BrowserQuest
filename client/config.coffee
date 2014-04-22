@@ -8,7 +8,7 @@ _ = require("underscore")
 fs = require("fs")
 yaml = require("js-yaml")
 
-config = yaml.safeLoad(fs.readFileSync("#{__dirname}/../config/client.yaml", "utf8"))
+config = yaml.safeLoad(fs.readFileSync("#{__dirname}/../config/client.yaml", "utf8")) or {}
 
 _.defaults(config,
   host: "localhost"
