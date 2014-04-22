@@ -70,9 +70,18 @@ module.exports = (grunt) ->
         command: "redis-server"
         options:
           async: true
-          failOnError: true
           stdout: printer("redis", "blue")
           stderr: printer("redis", "red")
+          callback: (code, out, err, done) ->
+            switch code
+              when 0
+                done()
+              when 1
+                grunt.log.writeln(">> Redis is probably already running...".yellow)
+                done()
+              else
+                grunt.fail.warn("There was something wrong with redis.")
+                done(false)
 
       server:
         command: "coffee server/main.coffee"
